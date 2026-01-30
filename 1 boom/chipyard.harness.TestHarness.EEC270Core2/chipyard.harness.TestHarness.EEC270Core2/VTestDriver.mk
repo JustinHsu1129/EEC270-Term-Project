@@ -1,0 +1,98 @@
+# Verilated -*- Makefile -*-
+# DESCRIPTION: Verilator output: Makefile for building Verilated archive or executable
+#
+# Execute this makefile from the object directory:
+#    make -f VTestDriver.mk
+
+default: /home/justin/chipyard/sims/verilator/simulator-chipyard.harness-EEC270Core2
+
+### Constants...
+# Perl executable (from $PERL)
+PERL = perl
+# Path to Verilator kit (from $VERILATOR_ROOT)
+VERILATOR_ROOT = /home/justin/chipyard/.conda-env/share/verilator
+# SystemC include directory with systemc.h (from $SYSTEMC_INCLUDE)
+SYSTEMC_INCLUDE ?= 
+# SystemC library directory with libsystemc.a (from $SYSTEMC_LIBDIR)
+SYSTEMC_LIBDIR ?= 
+
+### Switches...
+# C++ code coverage  0/1 (from --prof-c)
+VM_PROFC = 0
+# SystemC output mode?  0/1 (from --sc)
+VM_SC = 0
+# Legacy or SystemC output mode?  0/1 (from --sc)
+VM_SP_OR_SC = $(VM_SC)
+# Deprecated
+VM_PCLI = 1
+# Deprecated: SystemC architecture to find link library path (from $SYSTEMC_ARCH)
+VM_SC_TARGET_ARCH = linux
+
+### Vars...
+# Design prefix (from --prefix)
+VM_PREFIX = VTestDriver
+# Module prefix (from --prefix)
+VM_MODPREFIX = VTestDriver
+# User CFLAGS (from -CFLAGS on Verilator command line)
+VM_USER_CFLAGS = \
+	 -O3 -std=c++17 -I/home/justin/chipyard/.conda-env/riscv-tools/include -I/home/justin/chipyard/tools/DRAMSim2 -I/home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral   -DVERILATOR \
+	-DVL_TIME_CONTEXT \
+
+# User LDLIBS (from -LDFLAGS on Verilator command line)
+VM_USER_LDLIBS = \
+	 -L/home/justin/chipyard/.conda-env/riscv-tools/lib -Wl,-rpath,/home/justin/chipyard/.conda-env/riscv-tools/lib -L/home/justin/chipyard/sims/verilator -L/home/justin/chipyard/tools/DRAMSim2 -lriscv -lfesvr -ldramsim  \
+
+# User .cpp files (from .cpp's on Verilator command line)
+VM_USER_CLASSES = \
+	SimDRAM \
+	SimJTAG \
+	SimTSI \
+	SimUART \
+	mm \
+	mm_dramsim2 \
+	remote_bitbang \
+	testchip_htif \
+	testchip_tsi \
+	uart \
+
+# User .cpp directories (from .cpp's on Verilator command line)
+VM_USER_DIR = \
+	/home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral \
+
+
+### Default rules...
+# Include list of all generated classes
+include VTestDriver_classes.mk
+# Include global rules
+include $(VERILATOR_ROOT)/include/verilated.mk
+
+### Executable rules... (from --exe)
+VPATH += $(VM_USER_DIR)
+
+SimDRAM.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/SimDRAM.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+SimJTAG.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/SimJTAG.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+SimTSI.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/SimTSI.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+SimUART.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/SimUART.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+mm.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/mm.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+mm_dramsim2.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/mm_dramsim2.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+remote_bitbang.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/remote_bitbang.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+testchip_htif.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/testchip_htif.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+testchip_tsi.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/testchip_tsi.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+uart.o: /home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/gen-collateral/uart.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+
+### Link rules... (from --exe)
+/home/justin/chipyard/sims/verilator/simulator-chipyard.harness-EEC270Core2: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
+
+
+# Verilated -*- Makefile -*-

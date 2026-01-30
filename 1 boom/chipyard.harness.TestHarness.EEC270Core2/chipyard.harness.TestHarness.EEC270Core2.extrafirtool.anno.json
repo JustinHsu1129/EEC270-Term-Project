@@ -1,0 +1,14 @@
+[
+	{
+		"class":"sifive.enterprise.firrtl.MarkDUTAnnotation",
+		"target":"~TestHarness|ChipTop"
+	},
+	{
+		"class": "sifive.enterprise.firrtl.TestHarnessHierarchyAnnotation",
+		"filename": "/home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/model_module_hierarchy.json"
+	},
+	{
+		"class": "sifive.enterprise.firrtl.ModuleHierarchyAnnotation",
+		"filename": "/home/justin/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.EEC270Core2/top_module_hierarchy.json"
+	}
+]
